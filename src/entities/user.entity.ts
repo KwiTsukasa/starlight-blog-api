@@ -1,15 +1,24 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity()
-export class User {
+export class BlogUser {
   @PrimaryGeneratedColumn()
-  id: number;
+  user_id: number;
 
   @Column()
-  firstName: string;
+  user_name: string;
 
   @Column()
-  lastName: string;
+  user_psd: string;
 
   @Column()
-  isActive: boolean;
+  user_email: string;
+
+  @Column()
+  user_profile: string;
+
+  @Column()
+  user_img: string;
+
+  @Column()
+  is_deleted: boolean;
 }
