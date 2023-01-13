@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { BlogUser } from 'src/entities/user.entity';
+import { BlogUser } from 'src/user/user.entity';
 @Injectable()
 export class UserService {
   constructor(
@@ -22,4 +22,16 @@ export class UserService {
     //console.log(data);
     return data;
   }
+  async find(username: string) {
+    console.log(username)
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .where('user.user_name = :user_name', {
+        user_name: `${username}`,
+      })
+      .getOne();
+    console.log(user)
+    return user;
+  }
+
 }

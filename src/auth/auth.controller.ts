@@ -1,0 +1,15 @@
+import { Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { ToolsService } from 'src/utils/tool.service';
+import { AuthGuard } from '@nestjs/passport';
+
+@Controller('auth')
+export class AuthController {
+    constructor(
+        private readonly toolsService: ToolsService,
+      ) {} //注入服务
+  @UseGuards(AuthGuard('local'))
+  @Post('/login')
+  async login(@Res() request){
+    request.send(this.toolsService.res(200,"登录成功",request.user));
+  }
+}
