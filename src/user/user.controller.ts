@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Session, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Session,
+  Req,
+  Res,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { ToolsService } from 'src/utils/tool.service';
 import { UserService } from 'src/user/user.service';
 
@@ -18,26 +28,31 @@ export class UserController {
     res.send(svgCaptcha.data); //给页面返回一张图片
   }
 
-  @Post('/login')
-  async login(@Body() body, @Session() session, @Res() res) {
-    //验证验证码，由前端传递过来
+  @Post('/register')
+  async register(@Body() body, @Session() session, @Res() res) {
     const { code } = body;
     if (code?.toUpperCase() === session.code?.toUpperCase()) {
-      console.log('test');
-      const query = await this.userService.loginUser(
-        body.user_name,
-        body.user_psd,
-      );
+      const query = await this.userService.find(body.username);
       if (query) {
-        const retn = this.toolsService.res(200, '登录成功', query);
-        res.send(retn);
+        throw new HttpException('用户名已存在', HttpStatus.BAD_REQUEST);
       } else {
-        const retn = this.toolsService.res(400, '用户名或密码错误', {});
-        res.send(retn);
+        const save = await this.userService.save({
+          user_name: body.username,
+          user_psd: body.password,
+          user_email: body.useremail,
+          user_profile: '',
+          user_img: '',
+          is_deleted: 0,
+        });
+        if (save) {
+          const retn = this.toolsService.res(200, '注册成功', save);
+          res.send(retn);
+        } else {
+          throw new HttpException('注册失败', HttpStatus.BAD_REQUEST);
+        }
       }
     } else {
-      const retn = this.toolsService.res(400, '验证码错误', {});
-      res.send(retn);
+      throw new HttpException('验证码错误', HttpStatus.BAD_REQUEST);
     }
   }
 }

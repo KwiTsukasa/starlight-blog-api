@@ -8,30 +8,22 @@ export class UserService {
     @InjectRepository(BlogUser)
     private readonly userRepository: Repository<BlogUser>,
   ) {}
-  async loginUser(name: string, psd: string) {
-    console.log(name, psd);
-    const data = await this.userRepository
-      .createQueryBuilder('user')
-      .where('user.user_name = :user_name', {
-        user_name: `${name}`,
-      })
-      .andWhere('user.user_psd = :user_psd', {
-        user_psd: `${psd}`,
-      })
-      .getOne();
-    //console.log(data);
-    return data;
-  }
+
   async find(username: string) {
-    console.log(username)
     const user = await this.userRepository
       .createQueryBuilder('user')
+      .addSelect('user.user_psd')
       .where('user.user_name = :user_name', {
         user_name: `${username}`,
       })
       .getOne();
-    console.log(user)
     return user;
+  }
+
+  async save(user){
+    const link = await this.userRepository.create(user);
+    const save = await this.userRepository.save(link);
+    return save;
   }
 
 }

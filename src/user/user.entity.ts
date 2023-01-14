@@ -7,7 +7,7 @@ export class BlogUser {
   @Column()
   user_name: string;
 
-  @Column()
+  @Column({ select: false })
   user_psd: string;
 
   @Column()

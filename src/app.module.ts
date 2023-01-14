@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config'
+import { ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -14,13 +17,12 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: 'root',
       database: 'myblog',
-      synchronize: true,
       entities: [__dirname + '/**/*.entity.js'],
     }),
     UserModule,
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,ConfigService],
 })
 export class AppModule {}
