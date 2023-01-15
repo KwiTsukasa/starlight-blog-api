@@ -8,11 +8,17 @@
 
 使用服务端框架`Nest.js`构建项目以及`ORM`框架`TypeORM`快速生成`SQL`语句
 
+使用`@nestjs/passport`以及`@nestjs/jwt`实现全局路由token认证拦截
+
 使用插件`svg-captcha`快速生成验证码图片
 
 ## 插件
 
-- `svg-captcha`
+- `svg-captcha` 验证码图片生成
+
+- `@nestjs/passport` 基于`nest`的前置路由认证守卫
+
+- `@nestjs/jwt` 基于`nest`的`jwt`认证策略
 
 ## 运行项目
 
