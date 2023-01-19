@@ -1,6 +1,6 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -10,9 +10,11 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     this.authService = authService;
   }
 
-  async validate(username: string, password: string){
+  async validate(username: string, password: string) {
     const user = await this.authService.validate(username, password);
-    if (user) return user;
-    else throw new UnauthorizedException('用户名或密码错误');
+    if (user && !user.is_deleted) return user;
+    else if (user && user.is_deleted)
+      throw new BadRequestException('账号不存在');
+    else throw new BadRequestException('用户名或密码错误');
   }
 }

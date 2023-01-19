@@ -8,7 +8,6 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('/login')
   async login(@Res() req) {
-    console.log(req.req.user);
     req.send(this.toolsService.res(200, '登录成功', req.req.user));
   }
 

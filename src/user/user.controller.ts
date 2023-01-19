@@ -42,6 +42,7 @@ export class UserController {
           user_email: body.useremail,
           user_profile: '',
           user_img: '',
+          user_links: '',
           is_deleted: 0,
         });
         if (save) {

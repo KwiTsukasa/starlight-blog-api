@@ -1,5 +1,5 @@
 type res = {
-    code:number,
-    msg:string,
+    statusCode:number,
+    message:string,
     data:any
 }

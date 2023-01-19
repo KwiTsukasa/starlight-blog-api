@@ -20,5 +20,8 @@ export class BlogUser {
   user_img: string;
 
   @Column()
+  user_links: string;
+
+  @Column()
   is_deleted: boolean;
 }

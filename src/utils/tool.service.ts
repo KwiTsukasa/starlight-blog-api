@@ -14,10 +14,10 @@ export class ToolsService {
     });
     return captcha;
   }
-  res(code: number, msg: string, data: any) {
+  res(statusCode: number, message: string, data: any) {
     const retn: res = {
-      code,
-      msg,
+      statusCode,
+      message,
       data,
     };
     return retn;
