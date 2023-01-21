@@ -14,15 +14,18 @@ export class BlogArticle {
   @PrimaryGeneratedColumn()
   blog_id: number;
 
-  @ManyToOne(() => BlogUser,blog_user => blog_user.blog_articles,{
-    createForeignKeyConstraints:false
+  @ManyToOne(() => BlogUser, (blog_user) => blog_user.blog_articles, {
+    createForeignKeyConstraints: false,
   })
   blog_user: BlogUser;
 
-  @ManyToOne(() => BlogGroup,blog_group => blog_group.blog_articles,{
-    createForeignKeyConstraints:false
+  @ManyToOne(() => BlogGroup, (blog_group) => blog_group.blog_articles, {
+    createForeignKeyConstraints: false,
   })
   blog_group: BlogGroup;
+
+  @Column()
+  tag_ids: string;
 
   @Column()
   blog_content: string;
