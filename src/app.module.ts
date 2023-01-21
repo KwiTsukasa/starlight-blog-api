@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { GroupModule } from './group/group.module';
+import { ArticleModule } from './blog/article.module';
+import { TagModule } from './tag/tag.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -20,9 +23,12 @@ import { AuthModule } from './auth/auth.module';
       entities: [__dirname + '/**/*.entity.js'],
     }),
     UserModule,
-    AuthModule
+    GroupModule,
+    ArticleModule,
+    TagModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService,ConfigService],
+  providers: [AppService, ConfigService],
 })
 export class AppModule {}

@@ -10,7 +10,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ToolsService } from 'src/utils/tool.service';
-import { UserService } from 'src/user/user.service';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
