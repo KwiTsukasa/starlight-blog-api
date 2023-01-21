@@ -21,15 +21,20 @@ export class AuthService {
     const user = await this.userService.find(username);
     // 注：实际中的密码处理应通过加密措施
     if (user && user.user_psd === password) {
-      const token = this.createToken(username, password);
-      return { ...Object.assign(user), access_token: token };
+      const token = this.createToken(username, user.user_id);
+      delete user.user_psd;
+      return {
+        ...Object.assign(user),
+        access_token: token,
+        expires_time: 1 * 60 * 60,
+      };
     } else {
       return null;
     }
   }
 
-  createToken(username: string, password: string) {
-    const token = this.jwtService.sign({ username, password });
+  createToken(username: string, userid: number) {
+    const token = this.jwtService.sign({ username, userid });
     return token;
   }
 

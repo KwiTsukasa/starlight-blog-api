@@ -9,21 +9,46 @@ export class GroupService {
     private readonly userRepository: Repository<BlogGroup>,
   ) {}
 
-//   async find(username: string) {
-//     const user = await this.userRepository
-//       .createQueryBuilder('user')
-//       .addSelect('user.user_psd')
-//       .where('user.user_name = :user_name', {
-//         user_name: `${username}`,
-//       })
-//       .getOne();
-//     return user;
-//   }
+  async all(user_id: number): Promise<BlogGroup[]> {
+    const groups = await this.userRepository
+      .createQueryBuilder('group')
+      .where('group.user_id = :user_id', {
+        user_id,
+      })
+      .getMany();
+    return groups;
+  }
 
-//   async save(user){
-//     const link = await this.userRepository.create(user);
-//     const save = await this.userRepository.save(link);
-//     return save;
-//   }
+  async find(group_id: number, user_id: number): Promise<BlogGroup> {
+    const group = await this.userRepository
+      .createQueryBuilder('group')
+      .where('group.group_id = :group_id', {
+        group_id,
+      })
+      .andWhere('group.user_id = :user_id', {
+        user_id,
+      })
+      .getOne();
+    return group;
+  }
 
+  async save(group: BlogGroup): Promise<BlogGroup> {
+    const link = this.userRepository.create(group);
+    const save = await this.userRepository.save(link);
+    return save;
+  }
+
+  async kv(user_id: number) {
+    const groups = await this.all(user_id);
+    if (groups) {
+      const kvMap = groups.map((ele) => {
+        return {
+          label: ele.group_content,
+          value: ele.group_id,
+        };
+      });
+      return kvMap;
+    }
+    return groups;
+  }
 }

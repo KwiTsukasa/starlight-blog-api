@@ -2,27 +2,20 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { BlogUser } from 'src/user/user.entity';
-import { BlogGroup } from 'src/group/group.entity';
 
 @Entity()
 export class BlogArticle {
   @PrimaryGeneratedColumn()
   blog_id: number;
 
-  @ManyToOne(() => BlogUser, (blog_user) => blog_user.blog_articles, {
-    createForeignKeyConstraints: false,
-  })
-  blog_user: BlogUser;
+  @Column()
+  user_id: number;
 
-  @ManyToOne(() => BlogGroup, (blog_group) => blog_group.blog_articles, {
-    createForeignKeyConstraints: false,
-  })
-  blog_group: BlogGroup;
+  @Column()
+  group_id: number;
 
   @Column()
   tag_ids: string;
