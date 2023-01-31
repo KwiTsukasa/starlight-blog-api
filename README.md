@@ -6,7 +6,7 @@
 
 此项目为`starlight-blog`服务端,基于`Node`、`Ts`开发
 
-使用服务端框架`Nest.js`构建项目以及`ORM`框架`TypeORM`快速生成`SQL`语句
+使用服务端框架`Nest.js`构建项目以及`ORM`框架`TypeORM`快速生成`SQL`语句以及映射`SQL`库表字段关系
 
 使用`@nestjs/passport`以及`@nestjs/jwt`实现全局路由token认证拦截
 
