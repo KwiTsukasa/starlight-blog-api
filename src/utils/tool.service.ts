@@ -18,7 +18,9 @@ export class ToolsService {
     const retn: res = {
       statusCode,
       message,
-      data,
+      data:{
+        data
+      },
     };
     return retn;
   }

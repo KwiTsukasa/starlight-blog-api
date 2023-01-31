@@ -31,13 +31,21 @@ export class AuthController {
     res.send(this.toolsService.res(200, '测试', 'test'));
   }
 
-  @Post('refreshToken')
+  @Post('/refreshToken')
   async refreshToken(@Req() req, @Body() body, @Res() res) {
     const access_token = this.authService.createToken(
       body.user_name,
       body.user_id,
+      30,
+    );
+    const refresh_token = this.authService.createToken(
+      body.user_name,
+      body.user_id,
+      1 * 60 * 60 * 24 * 7,
     );
     req.session.user_id = body.user_id;
-    res.send(this.toolsService.res(200, 'refresh', access_token));
+    res.send(
+      this.toolsService.res(200, 'refresh', { access_token, refresh_token }),
+    );
   }
 }
