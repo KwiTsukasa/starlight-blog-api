@@ -36,7 +36,7 @@ export class AuthService {
         ...Object.assign(user),
         access_token,
         refresh_token,
-        expires_time: 1 * 60 * 60,
+        expires_time: 30,
       };
     } else {
       return null;

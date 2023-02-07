@@ -45,7 +45,11 @@ export class AuthController {
     );
     req.session.user_id = body.user_id;
     res.send(
-      this.toolsService.res(200, 'refresh', { access_token, refresh_token }),
+      this.toolsService.res(200, 'refresh', {
+        access_token,
+        refresh_token,
+        expires_time: 30,
+      }),
     );
   }
 }
